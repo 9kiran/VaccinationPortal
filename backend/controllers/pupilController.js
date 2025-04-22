@@ -36,3 +36,19 @@ export const bulkUploadPupils = async (req, res) => {
       }
     });
 };
+
+export const updatePupil = async (req, res) => {
+  const { vaccine, administeredOn } = req.body;
+  const pupil = await Pupil.findById(req.params.id);
+  if (!pupil) return res.status(404).json({ error: 'Pupil not found' });
+
+  const alreadyVaccinated = pupil.vaccines?.some(
+    v => v.vaccine.toLowerCase() === vaccine.toLowerCase()
+  );
+  if (alreadyVaccinated) return res.status(400).json({ error: 'Already vaccinated for this vaccine.' });
+
+  pupil.vaccines.push({ vaccine, administeredOn });
+  await pupil.save();
+
+  res.json(pupil);
+};

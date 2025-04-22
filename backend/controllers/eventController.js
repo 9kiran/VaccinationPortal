@@ -51,3 +51,19 @@ export const createEvent = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+export const updateEvent = async (req, res) => {
+  const event = await VaccinationEvent.findById(req.params.id);
+  if (!event) return res.status(404).json({ error: 'Drive not found' });
+
+  const isPast = new Date(event.eventDate) < new Date();
+  if (isPast) return res.status(400).json({ error: 'Cannot edit a past drive' });
+
+  const { eventDate, doseCount } = req.body;
+
+  event.eventDate = eventDate;
+  event.doseCount = doseCount;
+  await event.save();
+
+  res.json(event);
+};

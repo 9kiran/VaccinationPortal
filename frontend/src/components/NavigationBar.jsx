@@ -8,7 +8,7 @@ export default function NavigationBar({ onLogout }) {
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>Vaccination Portal</Typography>
         <Button color="inherit" component={Link} to="/">Dashboard</Button>
-        <Button color="inherit" component={Link} to="/pupils">Pupils</Button>
+        <Button color="inherit" component={Link} to="/pupils">Students</Button>
         <Button color="inherit" component={Link} to="/events">Drives</Button>
         <Button color="inherit" component={Link} to="/reports">Reports</Button>
         <Button color="inherit" onClick={onLogout}>Logout</Button>

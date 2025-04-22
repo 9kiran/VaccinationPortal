@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { getAllPupils, addPupil, bulkUploadPupils } from '../controllers/pupilController.js';
+import { getAllPupils, addPupil, bulkUploadPupils, updatePupil } from '../controllers/pupilController.js';
 
 const router = express.Router();
 const upload = multer({ dest: 'uploads/' });
@@ -66,5 +66,7 @@ router.post('/', addPupil);
  *         description: Pupils uploaded successfully
  */
 router.post('/upload', upload.single('file'), bulkUploadPupils);
+
+router.patch('/:id/vaccinate', updatePupil);
 
 export default router;

@@ -1,34 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, Card, CardContent, CircularProgress } from '@mui/material';
+import { Box, Grid, Paper, Typography, Card, CardContent } from '@mui/material';
 import axios from 'axios';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 export default function Dashboard() {
-  const [metrics, setMetrics] = useState(null);
+  const [metrics, setMetrics] = useState({
+    totalStudents: 0,
+    vaccinatedStudents: 0,
+    percentageVaccinated: 0,
+    upcomingDrives: []
+  });
 
   useEffect(() => {
-    const loadMetrics = async () => {
-      const pupilsData = await axios.get('http://localhost:5000/api/pupils');
-      const driveData = await axios.get('http://localhost:5000/api/events/upcoming');
-
-      const total = pupilsData.data.length;
-      const vaccinated = pupilsData.data.filter(p => p.vaccines.length > 0).length;
-      const upcoming = driveData.data.length;
-
-      setMetrics({ total, vaccinated, upcoming });
-    };
-
-    loadMetrics();
+    axios.get('http://localhost:5000/api/summary')
+      .then(res => setMetrics(res.data))
+      .catch(err => console.error(err));
   }, []);
-
-  if (!metrics) return <Box p={3} display="flex" justifyContent="center"><CircularProgress /></Box>;
-
-  const percent = metrics.total > 0 ? ((metrics.vaccinated / metrics.total) * 100).toFixed(1) : '0';
 
   // Data for Pie Chart
   const pieData = [
-    { name: 'Vaccinated', value: metrics.vaccinated },
-    { name: 'Not Vaccinated', value: metrics.total - metrics.vaccinated },
+    { name: 'Vaccinated', value: metrics.vaccinatedStudents },
+    { name: 'Not Vaccinated', value: metrics.totalStudents - metrics.vaccinatedStudents },
   ];
 
   // Pie chart colors
@@ -36,39 +28,36 @@ export default function Dashboard() {
 
   return (
     <Box p={3}>
-      <Typography variant="h5" gutterBottom>System Overview</Typography>
-      <Grid container spacing={3}>
-        {/* Total Pupils Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card elevation={3}>
-            <CardContent>
-              <Typography variant="body2">Total Pupils</Typography>
-              <Typography variant="h5">{metrics.total}</Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+      <Typography variant="h5" gutterBottom>Dashboard Overview</Typography>
 
-        {/* Vaccinated Pupils Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card elevation={3}>
-            <CardContent>
-              <Typography variant="body2">Vaccinated Pupils</Typography>
-              <Typography variant="h5">{metrics.vaccinated} ({percent}%)</Typography>
-            </CardContent>
-          </Card>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6">Total Students</Typography>
+            <Typography variant="h4">{metrics.totalStudents}</Typography>
+          </Paper>
         </Grid>
-
-        {/* Upcoming Drives Card */}
-        <Grid item xs={12} sm={6} md={4}>
-          <Card elevation={3}>
-            <CardContent>
-              <Typography variant="body2">Upcoming Drives</Typography>
-              <Typography variant="h5">{metrics.upcoming > 0 ? metrics.upcoming : 'None'}</Typography>
-            </CardContent>
-          </Card>
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6">Vaccinated Students</Typography>
+            <Typography variant="h4">{metrics.vaccinatedStudents}</Typography>
+            <Typography variant="subtitle1">({metrics.percentageVaccinated}% vaccinated)</Typography>
+          </Paper>
         </Grid>
-
-        {/* Pie Chart */}
+        <Grid item xs={12} md={4}>
+          <Paper elevation={3} sx={{ padding: 2 }}>
+            <Typography variant="h6">Upcoming Drives</Typography>
+            {metrics.upcomingDrives.length > 0 ? (
+              metrics.upcomingDrives.map((d, i) => (
+                <Typography key={i}>
+                  {d.vaccine} — {new Date(d.eventDate).toLocaleDateString()}
+                </Typography>
+              ))
+            ) : (
+              <Typography color="text.secondary">No upcoming drives</Typography>
+            )}
+          </Paper>
+        </Grid>
         <Grid item xs={12} sm={12} md={6}>
           <Card elevation={3}>
             <CardContent>

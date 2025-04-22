@@ -5,6 +5,7 @@ import connectDB from './config/db.js';
 
 import pupilRoutes from './routes/pupilRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
+import summaryRoutes from './routes/summaryRoutes.js';
 import { serveSwagger, setupSwagger } from './docs/swagger.js';
 
 dotenv.config();
@@ -19,6 +20,7 @@ app.use('/api-docs', serveSwagger, setupSwagger);
 
 app.use('/api/pupils', pupilRoutes);
 app.use('/api/events', eventRoutes);
+app.use('/api/summary', summaryRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

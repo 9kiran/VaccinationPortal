@@ -1,6 +1,5 @@
-// src/App.js
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Dashboard from './pages/Dashboard';
 import Pupils from './pages/Pupils';

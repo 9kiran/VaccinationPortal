@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllEvents, getUpcomingEvents, createEvent } from '../controllers/eventController.js';
+import { getAllEvents, getUpcomingEvents, createEvent, updateEvent } from '../controllers/eventController.js';
 
 const router = express.Router();
 
@@ -59,5 +59,7 @@ router.get('/upcoming', getUpcomingEvents);
  *         description: Validation error
  */
 router.post('/', createEvent);
+
+router.put('/:id', updateEvent);
 
 export default router;
