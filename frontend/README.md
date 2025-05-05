@@ -6,6 +6,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `npm install`
+
+To install required dependencies.
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -13,6 +17,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 ### Login
 
-Only dummy login is available with 
-Username: admin
-Password: admin123
+Only dummy login is available with \
+_Username:_ admin \
+_Password:_ admin123
