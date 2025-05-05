@@ -5,6 +5,9 @@
 
 ## Run Project
 - Clone git repo **https://github.com/9kiran/VaccinationPortal/**
-- Navigate to backend folder and run **npm run start** to run node server
-- Run **npm run seed** to seed dummy data to server
-- Navigate to frontend folder and run **npm run start** to run react application
+- Navigate to backend folder
+    -  Run **npm run start** to run node server
+    -  Run **npm run seed** to seed dummy data to server
+- Navigate to frontend folder
+     - Run **npm install** to install required dependencies
+     - Run **npm run start** to run react application
