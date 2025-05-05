@@ -11,3 +11,9 @@
 - Navigate to frontend folder
      - Run **npm install** to install required dependencies
      - Run **npm run start** to run react application
+
+## Login
+
+Only dummy login is available with \
+_Username:_ admin \
+_Password:_ admin123
