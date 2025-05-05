@@ -2,7 +2,12 @@
 
 In the project directory, you can run:
 
-### `npm start`
+
+### `npm install`
+
+To install required dependencies.
+
+### `npm run start`
 
 To run the backend application. This will run the node server and start listing to api requests.
 
